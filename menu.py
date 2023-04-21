@@ -12,7 +12,7 @@ import pickle
 import copy
 import os
 import math
-import pandas as pd
+import pandas as pd 
 from datetime import datetime
 
 import desk
@@ -95,6 +95,8 @@ class Menu_Class(QMainWindow, menu_ui):
         self.seat.start_time = datetime.now()
         self.end.setDisabled(False)
         asyncio.run(send_bot(self.seat.name + self.seat.start_time.strftime(" %Y년 %m월 %d일 %H시 %M분 입실")))
+        self.parent.save()
+        self.parent.time_setting()
         
     def ending_time(self):
         self.start.setDisabled(False)
@@ -102,7 +104,7 @@ class Menu_Class(QMainWindow, menu_ui):
         self.end.setDisabled(True)
         asyncio.run(send_bot(self.seat.name + end_time.strftime(" %Y년 %m월 %d일 %H시 %M분 퇴실")))
         self.seat.start_time = 0
-        
+        self.parent.save()        
 
     def initUI(self):
         self.setupUi(self)

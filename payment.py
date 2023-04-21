@@ -52,7 +52,6 @@ class Payment_Class(QDialog, payment_ui):
     def initUI(self):
         self.setupUi(self)
         self.setFocusPolicy(Qt.StrongFocus)
-        self.print()
 
         #number
         self.number0.clicked.connect(lambda : self.clicked_number('0'))
@@ -72,10 +71,10 @@ class Payment_Class(QDialog, payment_ui):
         self.number_clear.clicked.connect(lambda : self.clicked_clear())
         self.number_all.clicked.connect(lambda : self.clicked_all())
 
-        self.Pay_cash.clicked.connect(lambda : self.clicked_payment('할인'))
-        self.Pay_discount.clicked.connect(lambda : self.clicked_payment('현금'))
-        self.Pay_credit.clicked.connect(lambda : self.clicked_payment('계좌'))
-        self.Pay_bank.clicked.connect(lambda : self.clicked_payment('은행'))
+        self.Pay_cash.clicked.connect(lambda : self.clicked_payment('현금'))
+        self.Pay_discount.clicked.connect(lambda : self.clicked_payment('할인'))
+        self.Pay_credit.clicked.connect(lambda : self.clicked_payment('카드'))
+        self.Pay_bank.clicked.connect(lambda : self.clicked_payment('계좌'))
         
         self.Pay_close.clicked.connect(self.clicked_close)
         self.Pay_all.clicked.connect(self.clicked_payall)
@@ -109,7 +108,6 @@ class Payment_Class(QDialog, payment_ui):
             
     def payment_table_ui(self):
         column_headers = ['결제 시간', '결제 타입', '결제 금액']
-        print(self.payment_list)
         model = TableModel(pd.DataFrame(self.payment_list, columns=column_headers))
 
         self.Pay_table.setModel(model)
@@ -124,9 +122,9 @@ class Payment_Class(QDialog, payment_ui):
                 self.v_discount += self.payment_list[i][2]
             elif self.payment_list[i][1] == '현금':
                 self.v_paid += self.payment_list[i][2]
-            elif self.payment_list[i][1] == '계좌':
+            elif self.payment_list[i][1] == '카드':
                 self.v_paid += self.payment_list[i][2]
-            elif self.payment_list[i][1] == '은행':
+            elif self.payment_list[i][1] == '계좌':
                 self.v_paid += self.payment_list[i][2]
         self.print()
 
@@ -199,3 +197,15 @@ class Payment_Class(QDialog, payment_ui):
     def print(self):
         self.number_label.setText(self.number_value)
         self.number_label.show()
+
+class double_Payment(Payment_Class):
+    def __init__(self, parent, payment_list = []):
+        super( ).__init__()
+        self.number_value = "0"
+        self.v_discount = 0
+        self.v_paid = 0
+        self.payment_list = payment_list
+        self.result = False
+        self.parent = parent
+
+        self.initUI()

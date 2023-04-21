@@ -60,8 +60,7 @@ class seat_button(QPushButton):
         if self.start_time == 0:
             return
         delta = datetime.now() - self.start_time
-        self.v_time = delta.minute/30*15000
-        
+        self.v_time = math.ceil(delta.total_seconds()/1800)*15000
 
     def order_setting(self):
         self.v_order = 0
@@ -155,12 +154,20 @@ class Desk_Class(QMainWindow, desk_ui):
             self.menu.show()
 
     def swap_seat(self, seat1, seat2):
-        seat1.total, seat2.total = seat2.total, seat1.total 
+        #seat1.total, seat2.total = seat2.total, seat1.total 
         seat1.start_time, seat2.start_time = seat2.start_time, seat1.start_time
         seat1.order_list, seat2.order_list = copy.deepcopy(seat2.order_list), copy.deepcopy(seat1.order_list)
         seat1.free_list, seat2.free_list = copy.deepcopy(seat2.free_list), copy.deepcopy(seat1.free_list)
         seat1.printing()
         seat2.printing()
+
+    def payment_seats(self, seats):
+        double_Payment = payment.double_Payment(seats)
+        double_Payment.show()
+
+    def click_seat(self):
+        for i in self.seat_list:
+            i.clicked.connect(lambda: self.button_menu(i))
 
     def dragEnterEvent(self, e):
         if self.pin_ui.isChecked():
