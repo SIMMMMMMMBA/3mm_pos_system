@@ -20,7 +20,7 @@ async def send_bot_photo(): #실행시킬 함수명 임의지정
     bot = telegram.Bot(token = api_key)
 
     # Take a screenshot
-    screenshot = pyautogui.screenshot()
+    screenshot = pyautogui.screenshot() 
 
     # Save the screenshot to a file
     screenshot_path = 'screenshot.png'
