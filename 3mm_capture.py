@@ -4,7 +4,6 @@ import pyautogui
 from PIL import Image
 from telegram import Bot
 import telegram
-import api_key as ap
 import asyncio
 import sys
 from PyQt5.QtWidgets import *
@@ -12,9 +11,12 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5 import uic
 
+with open("telegram_api.txt", "r") as f:
+    lines = f.readlines()
+    api_key = lines[0].strip()
+    channel_id = lines[1].strip()
+
 async def send_bot_photo(): #실행시킬 함수명 임의지정
-    api_key = ap.api_key
-    channel_id = ap.channel_id
     bot = telegram.Bot(token = api_key)
 
     # Take a screenshot
