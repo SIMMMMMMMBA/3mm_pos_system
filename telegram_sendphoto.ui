@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>삼미미 자동 텔레그램 보내기</string>
+   <string>삼미미 자동캡처프로그램</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="start">
